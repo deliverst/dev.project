@@ -1,6 +1,10 @@
 import './App.css'
 import { useEffect, useState } from 'react'
 
+
+const { VITE_URL } = import.meta.env
+
+
 function App() {
 
     const [email, setEmail] = useState('')
@@ -11,7 +15,7 @@ function App() {
     useEffect(() => {
 
         const getUser = async () => {
-            const response = await fetch('http://localhost:3000/user')
+            const response = await fetch(`${VITE_URL}/user`)
             const responseParsed = await response.json()
             setUsers(responseParsed)
         }
@@ -35,7 +39,7 @@ function App() {
     const handleSubmit = async (e) => {
         e.preventDefault()
 
-        const response = await fetch('http://localhost:3000/user',
+        const response = await fetch(`${VITE_URL}/user`,
             {
                 method: 'POST',
                 headers: { 'Content-Type': 'application/json' },
@@ -65,12 +69,12 @@ function App() {
 
         console.log(id)
 
-        const response = await fetch(`http://localhost:3000/user/${id}`,
+        const response = await fetch(`${VITE_URL}/user/${id}`,
             {
                 method: 'DELETE',
             })
         const responseParseed = await response.json()
-        console.log({responseParseed})
+        console.log({ responseParseed })
 
         const resto = users.filter(user => user._id !== id)
         setUsers(resto)
